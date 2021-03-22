@@ -1,0 +1,37 @@
+<script type="text/javascript">
+    console.log("register");
+    RED.nodes.registerType('yeelight', {
+        "label": function() { if(this.name !== undefined) return this.name; else return "yeelight"; },
+        "category": "common",
+        "color": "#FFCC00",
+        "icon": "font-awesome/fa-compress",
+        "inputs": 1,
+        "outputs": 1,
+        "paletteLabel": "yeelight",
+        "defaults": {
+              "name":{},
+              "ip": {}
+        }
+    });
+    </script>
+    <script type="text/x-red" data-template-name="yeelight">
+    
+      <div class="form-row">
+        <label for="node-input-name">
+            <i style="width:20px; text-align:left;" class="icon-tag"></i> 
+            Name
+        </label>
+        <input type="text" id="node-input-name">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-ip">
+            <i style="width:20px; text-align:left;" class="icon-tag"></i> 
+            IP Address
+        </label>
+        <input type="text" id="node-input-ip">
+    </div>
+    
+    
+    </script>
+    
