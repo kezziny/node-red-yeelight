@@ -11,6 +11,7 @@ class Yeelight {
 	constructor(config) {
 		RED.nodes.createNode(this, config);
 		this.config = config;
+		this.state = { connected: true };
 
 		this.pollTimer = null;
 		this.reconnectTimer = null;
@@ -52,17 +53,15 @@ class Yeelight {
 	}
 
 	onYeelightUpdate(p) {
-		var state = { "connected": true };
-
-		if (p.hasOwnProperty("power")) state.power = p.power == "on";
-		if (p.hasOwnProperty("active_mode")) state.mode = p.active_mode == "0" ? "day" : "night";
-		if (p.hasOwnProperty("nl_br") && state.mode === "night") this.newState.brightness = parseInt(p.nl_br);
-		if (p.hasOwnProperty("bright")) state.brightness = parseInt(p.bright);
-		if (p.hasOwnProperty("ct")) state.kelvin = parseInt(p.ct);
+		if (p.hasOwnProperty("power")) this.state["power"] = p.power == "on";
+		if (p.hasOwnProperty("active_mode")) this.state["mode"] = p.active_mode == "0" ? "day" : "night";
+		if (p.hasOwnProperty("nl_br") && state.mode === "night") this.state["brightness"] = parseInt(p.nl_br);
+		if (p.hasOwnProperty("bright")) this.state["brightness"] = parseInt(p.bright);
+		if (p.hasOwnProperty("ct")) this.state["kelvin"] = parseInt(p.ct);
 
 
-		this.status({ fill: "green", shape: "dot", text: JSON.stringify(state) });
-		this.send({ payload: state });
+		this.status({ fill: "green", shape: "dot", text: JSON.stringify(this.state) });
+		this.send({ payload: this.state });
 
 	}
 
